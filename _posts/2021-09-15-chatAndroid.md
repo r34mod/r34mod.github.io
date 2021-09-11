@@ -19,8 +19,8 @@ Empezamos por la seccion de la conexion con la base de datos. En este caso **Fir
 
 Los pasos que veremos en este post:
 1. Conexion con Firebase
-2. Autentificacion 
-3. Inicio de sesion
+2. Inicio de sesion 
+3. Cerrar sesion
 4. Entrando al menu principal
 
 ### Java prototype
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             new AuthUI.IdpConfig.FacebookBuilder().build());
 ```
 
-#### 2. Socket creation
+#### 2. Inicio de sesion
 
 En este paso, se mostrara el metodo **onCreate** y a su vez como iniciamos sesion y comprobamos el usuario.
 
@@ -79,7 +79,9 @@ En este paso, se mostrara el metodo **onCreate** y a su vez como iniciamos sesio
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser usuario = firebaseAuth.getCurrentUser();
                 if(usuario != null){
+                
                     principal();
+                
                     Toast.makeText(MainActivity.this, "Log in", Toast.LENGTH_SHORT).show();;
                 }else{
                     startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
@@ -90,3 +92,45 @@ En este paso, se mostrara el metodo **onCreate** y a su vez como iniciamos sesio
     }
 
 ```
+
+### 3. Inicio de sesion.
+
+Tras entrar en nuestra sesion de Facebook mismamente, podemos salirnos y para ello creamos dos metodos, que controlan la salida y cierre de nuestra sesion con ese perfil.
+
+```java
+
+@Override
+    protected void onResume(){
+        super.onResume();
+        authfire.addAuthStateListener(authlistener);
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        authfire.removeAuthStateListener(authlistener);
+    }
+
+```
+
+
+### 4. Menu principal
+
+La app ya comprobo si nos pudimos loguear, asi que nos creamos un metodo donde llamamos a otra clase, este caso **Principal**
+
+```java
+
+
+private void principal(){
+        Intent princi = new Intent(this, Ajustes.class);
+        princi.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(princi);
+    }
+
+```
+
+esta clase fue llamada en Inicio de Sesion, creando ademas un Toast para mostrar al usuario que ha podido entrar con su cuenta.
+
+
+
+En el siguiente post se visualiza la parte de la Clase **Principal** y sus metodos.
+
