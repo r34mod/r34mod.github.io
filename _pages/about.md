@@ -13,5 +13,15 @@ Estudie en Madrid realizando asi una FP Superior:
 
 -Desarrollo de aplicaciones multiplatafor y desarrollo de aplicaciones web (Dual)(Doble titulacion)
 
+##Experiencia
 
+-Profesor de robotica en Las Rozas (Madrid) desarrollando un robot para la competicion del ayuntamiento contra otros centros.
+  El proyecto fue desarrollado con python.
+
+-Desarrollador web por cuenta propia, usando Frameworks como AngularJs, React.
+
+-Desarrollo de bots para la plataforma Discord. 
+  Lenguaje usado JavaScript, Python y utilizando NodeJs y npm.
+  
+ 
 
