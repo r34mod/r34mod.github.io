@@ -21,10 +21,10 @@ Esta clase la llamamos **Principal**
 
 Este sera el orden que trabajaremos:
 
-- 1. Metodo onCreate
-- 2. Metodo estado (del usuario)
-- 3. Metodos de informacion 
-- 4. Cerrar sesion
+ 1. Metodo onCreate
+ 2. Metodo estado (del usuario)
+ 3. Metodos de informacion 
+ 4. Cerrar sesion
 
 
 Empezando con el onCreate, primero os dejare loos import y los atributos creados.
@@ -152,3 +152,35 @@ Para ello utilizamos un switch, pasandole como dato una posicion especifica.
         });
 
 ```
+
+
+Cada **case** representa un Fragmento distinto, y en el caso de solicitudes, incluimos unos metodos para visualizar el numero de solicitudes que tenemos y cuando nos hayamos metido, nos manda un mensaje (Toast) diciendo que ya hemos visualizado todas, dandonos asi un valor de "0".
+
+
+
+```java
+
+
+tabLayoutMediator.attach();
+        view2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position){
+                super.onPageSelected(position);
+                BadgeDrawable badgeDrawable = tabLayout.getTabAt(position).getOrCreateBadge();
+                badgeDrawable.setVisible(false);
+
+                if(position==2){
+                    contadorcero();
+                }
+            }
+        });
+
+        final FirebaseUser usuarios = FirebaseAuth.getInstance().getCurrentUser();
+
+        usuario();
+
+
+    }
+    
+    
+ ```
