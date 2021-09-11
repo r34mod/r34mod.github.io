@@ -77,3 +77,78 @@ import java.util.Calendar;
 
 
 ```
+
+
+Siempre hacemos referencias con FirebaseUser para obtener las keys del usuario. 
+
+El DatabaseReference lo usamos para obtener le Id de nuestro usuario generada en la tabla que hagamos referencia, mas adelante veremos su uso en detalle.
+
+
+Tras tener los atributos necesarios, empezaremos con el metodo **onCreate** , con el que se maneja toda la clase y para el usuario, la interfaz en la que se localiza en ese momento.
+
+Para empezar, cree un menu que funciona deslizandose de izquierda a derecha y cambiando los **Fragmentos** que seran los "chats", "peticiones", "solicitudes", "llamadas"
+Para ello utilizamos un switch, pasandole como dato una posicion especifica.
+
+```java
+
+ @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_principal);
+
+        ViewPager2 view2 = findViewById(R.id.viewPage);
+        view2.setAdapter(new AdapterPages(this));
+
+        final TabLayout tabLayout = findViewById(R.id.tabla);
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, view2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position){
+                    case 0:
+                        tab.setText("Usuarios");
+                        tab.setIcon(R.drawable.ic_users);
+                        break;
+                    case 1:
+                        tab.setText("Chats");
+                        tab.setIcon(R.drawable.ic_chat);
+                        break;
+                    case 2:
+                        tab.setText("Solicitudes");
+                        tab.setIcon(R.drawable.ic_contacto);
+                        final BadgeDrawable badgeDrawable = tab.getOrCreateBadge();
+                        badgeDrawable.setBackgroundColor(
+                                ContextCompat.getColor(getApplicationContext(), R.color.colorAccent)
+                        );
+                        badgeDrawable.setVisible(true);
+                        //badgeDrawable.setNumber(2);
+                        ref_soli_cont.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.exists()){
+                                    Integer count = snapshot.getValue(Integer.class);
+                                    badgeDrawable.setVisible(true);
+                                    if(count.equals("0")){
+
+                                        badgeDrawable.setVisible(false);
+                                    }else{
+                                        badgeDrawable.setNumber(count);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        break;
+                    case 3:
+                        tab.setText("Llamadas");
+                        tab.setIcon(R.drawable.ic_contacting);
+                        break;
+
+                }
+            }
+        });
+
+```
