@@ -1,6 +1,6 @@
 ---
 layout: single
-title: Red Social Android App
+title: Red Social Android App parte 2
 date: 2021-09-15
 classes: wide
 header:
@@ -14,7 +14,7 @@ tags:
   - backend
 ---
 
-Ya vimos la primera parte de esta aplicacion que es el inicio de sesion. Tras esto, adentramos a un menu principal, sencillo de navegar y con la informacion suficiente para acceder a las demas ventanas.
+Ya vimos la primera parte de esta aplicacion que es el inicio de sesion. Tras esto, adentramos a un menu principal, sencillo de navegar y con la informacion suficiente para acceder a las demas ventanas y fragmentos, en los cuales tendremos el chat y nuestros amigos agregados.
 
 
 Esta clase la llamamos **Principal** 
