@@ -83,6 +83,7 @@ Siempre hacemos referencias con FirebaseUser para obtener las keys del usuario.
 
 El DatabaseReference lo usamos para obtener le Id de nuestro usuario generada en la tabla que hagamos referencia, mas adelante veremos su uso en detalle.
 
+### 1 Metodo onCreate
 
 Tras tener los atributos necesarios, empezaremos con el metodo **onCreate** , con el que se maneja toda la clase y para el usuario, la interfaz en la que se localiza en ese momento.
 
@@ -184,3 +185,177 @@ tabLayoutMediator.attach();
     
     
  ```
+ 
+ Y el metodo de contador de solicitudes, que siempre creamos metodos a parte para poder trabajar mejor con ellos. Sencillamente es un comprobador y nos devuelve la cifra de solicitudes con un Toast
+ 
+ ```java
+ 
+ private void contadorcero(){
+        ref_soli_cont.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    ref_soli_cont.setValue(0);
+                    Toast.makeText(Principal.this, "Es 0", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+ 
+ ```
+
+### 2 Metodo de estado
+
+Ahora hacemos un metodo que nos informa si nuestro usuario esta en linea o no, ademas si esta desconectado nos da la fecha de su ultima vez
+
+```java
+
+  private void estadoUser(final String estado) {
+        ref_estado.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Estado st = new Estado(estado, "","","");
+                ref_estado.setValue(st);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        estadoUser("conectado");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        estadoUser("desconectado");
+        cogerFecha();
+    }
+
+
+
+```
+
+Y ahora el metodo de la fecha y hora actual, obteniendola de su dispositivo movil
+
+```java
+
+ private void cogerFecha() {
+        final Calendar c = Calendar.getInstance();
+        final SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        final SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+
+        ref_estado.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ref_estado.child("fecha").setValue(date.format(c.getTime()));
+                ref_estado.child("hora").setValue(format.format(c.getTime()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    
+```
+
+Con este metodo, lo guardamos todo en la base de datos de Firebase y haciendo siempre referencias al usuario concreto de ese dispositivo.
+Tambien, utilizamos la libreria "Calendar" para poder trabajar mas comodo y obtener las fechas y horas.
+
+
+### 3 Los metodos de informacion del usuario
+
+Ahora necesitamos almacenar toda la informacion de nuestro usuario en la base de datos, su email, nombre, foto de perfil...
+
+Creamos el metodo **usuario()** y comprobamos si existe o no, si no existe obtenemos los distintos datos que queremos y los enviamos a la base de datos.
+Ademas, agregamos una fecha, pero no tiene mayor importancia.
+Luego, tras almacenarse en el Firebase, habra valores como el estado, el nombre o el numero de telefono que se podran modificar por el usuario.
+
+**ACLARACION: el ultimo campo "" esta vacio porque es el numero de telefono, y aqui el usuario lo pondra si el/ella quiere. ** 
+
+
+```java
+
+ private void usuario() {
+        reference_user.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                    Users us = new Users(
+                        firebaseUser.getUid(),
+                            firebaseUser.getDisplayName(),
+                            firebaseUser.getEmail(),
+                            firebaseUser.getPhotoUrl().toString(),
+                            "desconectado",
+                            "14/03/2021",
+                            "02:41",
+                            0,0,""
+                    );
+                    reference_user.setValue(us);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_principal, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.boton_cerrar:
+                AuthUI.getInstance().signOut(this).addOnCompleteListener(
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                finish();
+                                Toast.makeText(Principal.this, "Cerrando sesion", Toast.LENGTH_SHORT).show();
+                                login();
+
+                            }
+                        });
+
+            break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+
+     * Método para iniciar/registrarte en la app y nos mandaria a una clase Principaal
+
+
+     */
+
+    private void login() {
+        Intent princi = new Intent(this, MainActivity.class);
+        princi.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(princi);
+    }
+
+```
+
+Y para finalizar, el boton login() y el sistema de cierre de sesion desde la pantalla principal
