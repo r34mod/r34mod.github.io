@@ -1,6 +1,6 @@
 ---
 layout: single
-title: Red Social Android App
+title: Red Social Android App Parte 1
 date: 2021-09-15
 classes: wide
 header:
