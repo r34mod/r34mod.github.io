@@ -38,3 +38,11 @@ const varGame = '-';
 const queue = new Map();
 
 ```
+
+Siempre para empezar necesitamos la constante Discord que requiere ese archivo de javascript.
+
+Ademas de ese, necesitamos crear un objeto Cliente y luego nuestro token del id de nuestro bot creado en la web Developer de Discord.
+
+Para que ya todo funcione correctamente, creamos una variable que ira como prefijo de cualquier comando que pongamos, por ejemplo en mi caso, use '<' y despues la palabra que 
+quisiera poner.
+
