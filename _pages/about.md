@@ -7,11 +7,11 @@ date: 2019-02-15
 
 <br>
 
-Mi nombre es Ierai Galindo (**r34mod**) y actualmente trabajando en **Viewnext** como desarrollador de aplicaciones de moviles.
+Mi nombre es Ierai Galindo (**r34mod**) y actualmente trabajando en **Viewnext** como programador fullstack.
 
 Estudie en Madrid realizando asi una FP Superior:
 
--Desarrollo de aplicaciones multiplatafor y desarrollo de aplicaciones web (Dual)(Doble titulacion)
+-Desarrollo de aplicaciones multiplataforma y desarrollo de aplicaciones web (Dual)(Doble titulacion)
 
 ##Experiencia
 
@@ -21,7 +21,7 @@ Estudie en Madrid realizando asi una FP Superior:
 -Desarrollador web por cuenta propia, usando Frameworks como AngularJs, React.
 
 -Desarrollo de bots para la plataforma Discord. 
-  Lenguaje usado JavaScript, Python y utilizando NodeJs y npm.
+  Lenguaje usado JavaScript, Python y utilizando NodeJs.
   
  
 
