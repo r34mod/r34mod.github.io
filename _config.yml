@@ -15,7 +15,7 @@ remote_theme             : "mmistakes/minimal-mistakes@4.15.1"
 minimal_mistakes_skin    : "haxor" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "en-US"
+locale                   : "es-ES"
 title                    : "r34mod.io"
 title_separator          : "-"
 name                     : "r34mod"
@@ -105,7 +105,7 @@ author:
   avatar           : "/assets/images/avatar.png"
   bio              : "Desarrollo de aplicaciones multiplataforma, desarrollo web"
   location         : "Spain"
-  email            : "info@snowscan.io"
+  email            : "zondacamarafx10@gmail.com"
   uri              :
   home             : # null (default), "absolute or relative url to link to author home"
   bitbucket        :
@@ -117,7 +117,7 @@ author:
   github           : "r34mod"
   gitlab           :
   google_plus      :
-  keybase          : "snowscan"
+  keybase          : "r34mod"
   instagram        :
   lastfm           :
   linkedin         : # "john-doe-12345678" (the last part of your profile url, e.g. https://www.linkedin.com/in/john-doe-12345678)
