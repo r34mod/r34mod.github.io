@@ -9,9 +9,31 @@ date: 2019-02-15
 
 Mi nombre es Ierai Galindo (**r34mod**) y actualmente trabajando en **Viewnext** como programador fullstack.
 
-Estudie en Madrid realizando asi una FP Superior:
+Estudié en Madrid realizando así una FP Superior:
 
 -Desarrollo de aplicaciones multiplataforma y desarrollo de aplicaciones web (Dual)(Doble titulacion)
+
+-Master en AngularJS, ReactJs y VueJs (Udemy 40h)
+
+-Curso de Java 11 (Udemy 106h)
+
+
+##Lenguajes de programación
+
+-Java
+-C#
+-Python
+-JavaScript
+-PHP
+
+##Framworks y herramientas
+
+-Angular
+-React
+-Vue
+-NodeJS
+-Swagger
+
 
 ##Experiencia
 
